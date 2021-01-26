@@ -1,0 +1,325 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:EmployeeList">
+
+  <Style TargetType="{x:Type Border}" x:Key="mMainBorderStyle">
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Width" Value="900" />
+    <Setter Property="Height" Value="460" />
+    <Setter Property="BorderBrush" Value="Black" />
+    <Setter Property="BorderThickness" Value="2" />
+    <Setter Property="CornerRadius" Value="3" />
+  </Style>
+
+  <Style TargetType="{x:Type Border}" x:Key="mSalaryBorderStyle">
+    <Setter Property="Margin" Value="0,5,0,0" />
+    <Setter Property="BorderBrush" Value="Black" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="3" />
+  </Style>
+
+  <Style TargetType="{x:Type TextBlock}">
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+
+  <Style TargetType="{x:Type TextBox}">
+    <Setter Property="Margin" Value="3" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="14" />
+    <Style.Triggers>
+      <Trigger Property="Validation.HasError" Value="True">
+        <!--<Setter Property="Background" Value="Pink" />-->
+        <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent, Mode=OneWay}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style TargetType="{x:Type ComboBox}">
+    <Setter Property="Margin" Value="3" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Style.Triggers>
+      <Trigger Property="Validation.HasError" Value="True">
+        <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent, Mode=OneWay}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style TargetType="{x:Type ListBox}" x:Key="mEmployeeListBoxStyle">
+    <Setter Property="Margin" Value="0,0,5,3" />
+    <Setter Property="Height" Value="180" />
+  </Style>
+
+  <Style TargetType="{x:Type ListBox}" x:Key="mManagerListBoxStyle">
+    <Setter Property="Margin" Value="0,0,5,3" />
+  </Style>
+
+  <Style TargetType="{x:Type ListBox}" x:Key="mSubordinatesListBoxStyle">
+    <Setter Property="Margin" Value="3" />
+  </Style>
+
+  <Style TargetType="{x:Type CheckBox}" x:Key="mModeCheckBoxStyle">
+    <Setter Property="HorizontalAlignment" Value="Center" />
+  </Style>
+
+  <Style TargetType="{x:Type Button}" x:Key="mClearButtonStyle">
+    <Setter Property="Width" Value="20" />
+    <Setter Property="Height" Value="20" />
+  </Style>
+
+  <Style TargetType="{x:Type Button}" x:Key="mFillButtonStyle">
+    <Setter Property="Margin" Value="0,2,5,2" />
+  </Style>
+
+  <Style TargetType="{x:Type Button}" x:Key="mSalaryButtonStyle">
+    <Setter Property="Margin" Value="0,3,0,3" />
+  </Style>
+
+  <Style TargetType="{x:Type TextBlock}" x:Key="mSalaryTextBlockStyle">
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+
+  <Style TargetType="{x:Type TextBlock}" x:Key="mResultSalaryTextBlockStyle">
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+
+  <Style TargetType="{x:Type CheckBox}" x:Key="mSalaryCheckBoxStyle">
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Margin" Value="10,0,3,0" />
+  </Style>
+
+  <Style TargetType="{x:Type TextBlock}" x:Key="mManagerTextBlockStyle">
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="Blue" />
+    <Setter Property="TextDecorations" Value="Underline" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+
+  <!--  Fill Brushes  -->
+
+  <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#46b465" />
+        <GradientStop Offset="1.0" Color="#45A15F" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="HorizontalNormalBrush" StartPoint="0,0" EndPoint="1,0">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#FFF" />
+        <GradientStop Offset="1.0" Color="#CCC" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="LightBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#FFF" />
+        <GradientStop Offset="1.0" Color="#444" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="HorizontalLightBrush" StartPoint="0,0" EndPoint="1,0">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#FFF" />
+        <GradientStop Offset="1.0" Color="#EEE" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="DarkBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#5CD17D" />
+        <GradientStop Offset="1.0" Color="#26A64B" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#5CC079" />
+        <GradientStop Offset="0.1" Color="#6CD48A" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+  <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
+  <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
+  <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#CCC" />
+
+  <!--  Border Brushes  -->
+
+  <LinearGradientBrush x:Key="NormalBorderBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#45A15F" />
+        <GradientStop Offset="1.0" Color="#53AC6C" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="HorizontalNormalBorderBrush" StartPoint="0,0" EndPoint="1,0">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#CCC" />
+        <GradientStop Offset="1.0" Color="#444" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="DefaultedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#777" />
+        <GradientStop Offset="1.0" Color="#000" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <LinearGradientBrush x:Key="PressedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientBrush.GradientStops>
+      <GradientStopCollection>
+        <GradientStop Offset="0.0" Color="#444" />
+        <GradientStop Offset="1.0" Color="#888" />
+      </GradientStopCollection>
+    </GradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
+  <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
+  <SolidColorBrush x:Key="LightBorderBrush" Color="#AAA" />
+
+  <!--  Focus Visual  -->
+
+  <Style x:Key="ButtonFocusVisual">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Border>
+            <Rectangle Margin="2"
+                                   Stroke="#60000000"
+                                   StrokeDashArray="1 2"
+                                   StrokeThickness="1" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--  Button  -->
+
+  <Style x:Key="DefaultButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="SnapsToDevicePixels" Value="true" />
+    <Setter Property="OverridesDefaultStyle" Value="true" />
+    <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}" />
+    <Setter Property="MinHeight" Value="28" />
+    <Setter Property="MinWidth" Value="75" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border x:Name="Border"
+                            Background="{StaticResource NormalBrush}"
+                            BorderBrush="{StaticResource NormalBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="2">
+            <ContentPresenter Margin="2"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+              <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DefaultedBorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsDefaulted" Value="true">
+              <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DefaultedBorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+              <Setter TargetName="Border" Property="Background" Value="{StaticResource DarkBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+              <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PressedBorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+              <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
+              <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--  Submit/Cancel buttons  -->
+  
+  <LinearGradientBrush x:Key="SubmitButtonEnabledBG" StartPoint="0.5,0" EndPoint="0.5,1">
+    <GradientStop Offset="0.163" Color="#FF006C3B" />
+    <GradientStop Offset="1" Color="#FF00A04D" />
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="SubmitButtonDisabledBG" StartPoint="0.5,0" EndPoint="0.5,1">
+    <GradientStop Offset="0.163" Color="#FF6C6C6C" />
+    <GradientStop Offset="1" Color="#FF9F9F9F" />
+  </LinearGradientBrush>
+
+  <ControlTemplate x:Key="LeftButtonTemplate" TargetType="Button">
+    <Border x:Name="BgEnabled"
+                Width="{TemplateBinding Width}"
+                HorizontalAlignment="Right"
+                Background="{StaticResource SubmitButtonEnabledBG}"
+                BorderBrush="#FFFFFFFF"
+                BorderThickness="2,2,1,2"
+                CornerRadius="9,0,0,9">
+      <TextBlock x:Name="textBlock"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#FFFFFFFF"
+                        Text="{TemplateBinding Content}" />
+    </Border>
+    <ControlTemplate.Triggers>
+
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter TargetName="BgEnabled" Property="Background" Value="{StaticResource SubmitButtonDisabledBG}" />
+      </Trigger>
+
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  
+  <ControlTemplate x:Key="RightButtonTemplate" TargetType="Button">
+    <Border x:Name="BgEnabled"
+                Width="{TemplateBinding Width}"
+                HorizontalAlignment="Left"
+                Background="{StaticResource SubmitButtonEnabledBG}"
+                BorderBrush="#FFFFFFFF"
+                BorderThickness="1,2,2,2"
+                CornerRadius="0,9,9,0">
+      <TextBlock x:Name="textBlock"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#FFFFFFFF"
+                        Text="{TemplateBinding Content}" />
+    </Border>
+    <ControlTemplate.Triggers>
+
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter TargetName="BgEnabled" Property="Background" Value="{StaticResource SubmitButtonDisabledBG}" />
+      </Trigger>
+
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+
+</ResourceDictionary>

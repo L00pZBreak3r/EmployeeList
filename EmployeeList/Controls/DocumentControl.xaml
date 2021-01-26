@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="EmployeeList.Controls.DocumentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EmployeeList.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="mBooleanToVisibilityConverter"/>
+  </UserControl.Resources>
+  <Grid>
+    <Border Style="{StaticResource mMainBorderStyle}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="540" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+      <Grid Grid.Row="0" Grid.Column="0" FocusManager.FocusedElement="{Binding ElementName=mSalaryPlanComboBox}">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="190" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Фамилия:" Style="{StaticResource mSalaryTextBlockStyle}" />
+        <Grid Grid.Row="0" Grid.Column="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <TextBox Grid.Column="0" Text="{Binding Path=LastName, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+          <Button Grid.Column="1" Style="{StaticResource mClearButtonStyle}" ToolTip="Удалить сотрудника из базы" Click="RemoveItemButton_Click">x</Button>
+        </Grid>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя:" Style="{StaticResource mSalaryTextBlockStyle}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=FirstName, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Отчество:" Style="{StaticResource mSalaryTextBlockStyle}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=MiddleName}" />
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Категория сотрудника:" Style="{StaticResource mSalaryTextBlockStyle}" />
+        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="mSalaryPlanComboBox"
+                                 ItemsSource="{Binding Path=SalaryPlanItemsSource, Mode=OneWay}"
+                                 SelectedItem="{Binding Path=SelectedSalaryPlanItem}" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата поступления на работу:" Style="{StaticResource mSalaryTextBlockStyle}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=EmploymentDate, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Начальник:" Style="{StaticResource mManagerTextBlockStyle}" PreviewMouseDown="ManagerTextBlock_MouseButtonDown" />
+        <Grid Grid.Row="5" Grid.Column="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <TextBox Text="{Binding Path=SelectedManagerItem, ValidatesOnDataErrors=True, NotifyOnValidationError=True, Mode=OneWay}" IsReadOnly="True" />
+          <Button Grid.Column="1" Style="{StaticResource mClearButtonStyle}" ToolTip="Очистить поле НАЧАЛЬНИК" Click="ClearManagerButton_Click">x</Button>
+        </Grid>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Подчиненные:" Visibility="{Binding Path=SubordinatesFieldVisible, Mode=OneWay, Converter={StaticResource mBooleanToVisibilityConverter}}" />
+        <ListBox Grid.Row="6" Grid.Column="1" Style="{StaticResource mSubordinatesListBoxStyle}" ItemsSource="{Binding Path=SubordinatesItemsSource, Mode=OneWay}" SelectedItem="{Binding Path=SelectedSubordinatesItem}" Visibility="{Binding Path=SubordinatesFieldVisible, Mode=OneWay, Converter={StaticResource mBooleanToVisibilityConverter}}" MouseDoubleClick="SubordinatesListBox_MouseDoubleClick" />
+      </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="5,0,0,0">
+	      <Grid.RowDefinitions>
+	        <RowDefinition Height="Auto" />
+	        <RowDefinition Height="Auto" />
+	        <RowDefinition Height="Auto" />
+	        <RowDefinition />
+	      </Grid.RowDefinitions>
+	      <Grid>
+	        <Grid.ColumnDefinitions>
+	          <ColumnDefinition Width="Auto" />
+	          <ColumnDefinition />
+	        </Grid.ColumnDefinitions>
+	        <TextBlock Text="Список сотрудников:" VerticalAlignment="Bottom" />
+	        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+	          <Button Style="{StaticResource mFillButtonStyle}" Click="FillDbButton_Click">Заполнить</Button>
+	          <Button Style="{StaticResource mFillButtonStyle}" Click="ClearDbButton_Click">Очистить</Button>
+	        </StackPanel>
+	      </Grid>
+          <ListBox Grid.Row="1" Style="{StaticResource mEmployeeListBoxStyle}" ItemsSource="{Binding Path=EmployeesItemsSource, Mode=OneWay}" SelectedItem="{Binding Path=SelectedEmployeesItem}" />
+          <TextBlock Grid.Row="2" Text="Выберите начальника:" />
+          <ListBox Grid.Row="3" Style="{StaticResource mManagerListBoxStyle}" ItemsSource="{Binding Path=EmployeesItemsSource, Mode=OneWay}" SelectedItem="{Binding Path=SelectedManagerItem}" />
+        </Grid>
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource mSalaryBorderStyle}">
+        <Grid>
+	      <Grid.ColumnDefinitions>
+	        <ColumnDefinition Width="Auto" />
+	        <ColumnDefinition Width="Auto" />
+	        <ColumnDefinition Width="Auto" />
+	        <ColumnDefinition Width="Auto" />
+	        <ColumnDefinition Width="Auto" />
+	        <ColumnDefinition Width="Auto" />
+	        <ColumnDefinition />
+	      </Grid.ColumnDefinitions>
+	      <TextBlock Grid.Column="0" Margin="0,0,5,0" Text="Зарплата" Style="{StaticResource mSalaryTextBlockStyle}" />
+	      <TextBlock Grid.Column="1" Width="300" Text="{Binding Path=SalarySubjectName, Mode=OneWay}" Style="{StaticResource mResultSalaryTextBlockStyle}" />
+	      <TextBlock Grid.Column="2" Margin="5,0,5,0" Text="на дату" Style="{StaticResource mSalaryTextBlockStyle}" />
+          <TextBox Grid.Column="3" Width="100" Text="{Binding Path=ResultSalaryDate, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+	      <TextBlock Grid.Column="4" Text="=" Style="{StaticResource mSalaryTextBlockStyle}" />
+	      <TextBlock Grid.Column="5" Text="{Binding Path=ResultSalary, StringFormat=F2, Mode=OneWay}" Style="{StaticResource mResultSalaryTextBlockStyle}" />
+	      <StackPanel Grid.Column="6" HorizontalAlignment="Right" Orientation="Horizontal">
+	        <Button Click="ResultSalaryButton_Click" Style="{StaticResource mSalaryButtonStyle}">Рассчитать</Button>
+	        <CheckBox IsChecked="{Binding Path=ResultSalaryForAll}" Style="{StaticResource mSalaryCheckBoxStyle}">Все сотрудники</CheckBox>
+	      </StackPanel>
+	    </Grid>
+	    </Border>
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,5" HorizontalAlignment="Center" Text="{Binding Path=OperationText, Mode=OneWay}" Foreground="{Binding Path=OperationTextColor, Mode=OneWay}" />
+        <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource mModeCheckBoxStyle}" IsChecked="{Binding Path=AddingMode}">Режим добавления</CheckBox>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+          <Button Width="80"
+                                Command="{Binding Path=OkCommand}"
+                                Content="{Binding Path=OkCommandText, Mode=OneWay}"
+                                Cursor="Hand"
+                                Template="{StaticResource LeftButtonTemplate}" />
+          <Button Width="80"
+                                Command="{Binding Path=CancelCommand}"
+                                Content="Отменить"
+                                Cursor="Hand"
+                                Template="{StaticResource RightButtonTemplate}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>
